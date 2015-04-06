@@ -13,7 +13,7 @@ import alexiil.mods.lib.coremod.ChatTextTime;
 import alexiil.mods.lib.coremod.RoamingIPAddress;
 import alexiil.mods.lib.coremod.VanillaMethods;
 
-@Mod(modid = Lib.Mod.ID, version = "0.1", useMetadata = true)
+@Mod(modid = Lib.Mod.ID, version = "0.1", guiFactory = "alexiil.mods.lib.gui.ConfigGuiFactory", useMetadata = true)
 public class AlexIILLib extends AlexIILMod {
     public static final DecimalFormat df = new DecimalFormat();
 
