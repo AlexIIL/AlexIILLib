@@ -21,9 +21,20 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 import alexiil.mods.lib.AlexIILLib;
+import alexiil.mods.lib.Lib;
 
 public class ClassTransformer implements IClassTransformer {
-    public static Logger log = LogManager.getLogger(AlexIILLib.MODID + ".classTransformer");
+    public static Logger log = LogManager.getLogger(Lib.Mod.ID + ".classTransformer");
+    public static final boolean civcraft;
+
+    static {
+        Class<?> cls = null;
+        try {
+            cls = Class.forName("alexiil.mods.civ.CivCraft", false, ClassTransformer.class.getClassLoader());
+        }
+        catch (ClassNotFoundException e) {}
+        civcraft = cls != null;
+    }
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -41,14 +52,16 @@ public class ClassTransformer implements IClassTransformer {
                 return transformGuiNewChat(basicClass, !name.equals(transformedName));
 
             // CivCraft Transforming
-            if (transformedName.equals("net.minecraft.inventory.ContainerPlayer"))
-                return transformContainerPlayer(basicClass, !name.equals(transformedName));
+            if (civcraft) {
+                if (transformedName.equals("net.minecraft.inventory.ContainerPlayer"))
+                    return transformContainerPlayer(basicClass, !name.equals(transformedName));
 
-            if (transformedName.equals("net.minecraft.inventory.ContainerWorkbench"))
-                return transformContainerWorkbench(basicClass, !name.equals(transformedName));
+                if (transformedName.equals("net.minecraft.inventory.ContainerWorkbench"))
+                    return transformContainerWorkbench(basicClass, !name.equals(transformedName));
 
-            if (transformedName.equals("net.minecraft.tileentity.TileEntityFurnace"))
-                return transformTileEntityFurnace(basicClass, !name.equals(transformedName));
+                if (transformedName.equals("net.minecraft.tileentity.TileEntityFurnace"))
+                    return transformTileEntityFurnace(basicClass, !name.equals(transformedName));
+            }
 
         }
         catch (Throwable t) {

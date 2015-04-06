@@ -1,0 +1,4 @@
+alexiilutils.gui.contributors=Contributors
+alexiilutils.gui.commits=Changelog history
+alexiilutils.gui.connectExternallyDisabled=Connect externally has been disabled, so the contributors list and changelog could not be fetched
+

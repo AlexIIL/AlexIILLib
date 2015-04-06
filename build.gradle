@@ -15,7 +15,12 @@ buildscript {
     }
 }
 
+repositories {
+	mavenLocal()
+}
+
 apply plugin: 'forge'
+apply plugin: 'maven'
 
 ext.configFile = file "build.properties"
 configFile.withReader {
@@ -80,7 +85,12 @@ task deobfJar(type: Jar) {
     classifier = 'developer'
 }
 
-build.dependsOn sourceJar, deobfJar
+build.dependsOn sourceJar, deobfJar, install
+
+artifacts {
+    archives sourceJar
+    archives deobfJar
+}
 
 processResources
 {

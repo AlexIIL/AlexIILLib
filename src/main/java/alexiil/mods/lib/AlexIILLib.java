@@ -13,12 +13,11 @@ import alexiil.mods.lib.coremod.ChatTextTime;
 import alexiil.mods.lib.coremod.RoamingIPAddress;
 import alexiil.mods.lib.coremod.VanillaMethods;
 
-@Mod(modid = AlexIILLib.MODID, version = "0.1", useMetadata = true)
+@Mod(modid = Lib.Mod.ID, version = "0.1", useMetadata = true)
 public class AlexIILLib extends AlexIILMod {
-    public static final String MODID = "alexiil.utils";
     public static final DecimalFormat df = new DecimalFormat();
 
-    @Instance(MODID)
+    @Instance(Lib.Mod.ID)
     public static AlexIILLib instance;
 
     public static Property betterPotions, timeText, roamingIP, connectExternally;
@@ -28,7 +27,7 @@ public class AlexIILLib extends AlexIILMod {
     }
 
     public static void loadConfigs() {
-        Configuration cfg = new Configuration(new File("./config/" + MODID + ".cfg"));
+        Configuration cfg = new Configuration(new File("./config/" + Lib.Mod.ID + ".cfg"));
         cfg.load();
         betterPotions = cfg.get("general", "betterPotions", false);
         timeText = cfg.get("general", "textTime", false);

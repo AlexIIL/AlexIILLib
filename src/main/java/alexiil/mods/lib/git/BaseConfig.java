@@ -38,16 +38,15 @@ public abstract class BaseConfig extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawBackground(0);
-
         if (mod.connectExternally.getBoolean()) {
             commits.drawScreen(mouseX, mouseY, partialTicks);
             contributors.drawScreen(mouseX, mouseY, partialTicks);
-            drawString(fontRendererObj, LangUtils.format("civcraft.gui.contributors"), 8, 30, 0xFFFFFF);
-            String text = LangUtils.format("alexiil.utils.gui.commits");
+            drawString(fontRendererObj, LangUtils.format("alexiilutils.gui.contributors"), 8, 30, 0xFFFFFF);
+            String text = LangUtils.format("alexiilutils.gui.commits");
             drawString(fontRendererObj, text, this.width - fontRendererObj.getStringWidth(text) - 10, 30, 0xFFFFFF);
         }
         else {
-            String text = LangUtils.format("alexiil.utils.gui.connectExternallyDisabled");
+            String text = LangUtils.format("alexiilutils.gui.connectExternallyDisabled");
             int textWidth = fontRendererObj.getStringWidth(text);
             drawHoveringText(Collections.singletonList(text), (this.width - textWidth) / 2, this.height / 2);
         }
