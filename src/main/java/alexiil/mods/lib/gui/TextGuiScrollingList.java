@@ -1,4 +1,4 @@
-package alexiil.mods.lib.git;
+package alexiil.mods.lib.gui;
 
 import java.util.ArrayList;
 import java.util.List;
