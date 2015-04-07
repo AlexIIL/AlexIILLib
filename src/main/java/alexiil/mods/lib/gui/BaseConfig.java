@@ -22,6 +22,8 @@ public abstract class BaseConfig extends GuiScreen {
     private boolean help = false;
     private int xPosHelp = 0;
     private List<List<String>> helpText;
+    /** Used to determine the button positions across the top */
+    protected int totalLength;
 
     public BaseConfig(GuiScreen screen, AlexIILMod mod) {
         fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
@@ -117,7 +119,7 @@ public abstract class BaseConfig extends GuiScreen {
     public void initGui() {
         String text = LangUtils.format("alexiillib.config.button");
         int length = fontRendererObj.getStringWidth(text) + 20;
-        int totalLength = 10;
+        totalLength = 10;
         buttonList.add(new GuiButton(0, totalLength, 1, length, 20, text));
         totalLength += length;
 
@@ -132,6 +134,7 @@ public abstract class BaseConfig extends GuiScreen {
         helpClose = new GuiButton(2, totalLength, 1, length, 20, text);
         helpClose.visible = false;
         buttonList.add(helpClose);
+        totalLength += length;
     }
 
     @Override
