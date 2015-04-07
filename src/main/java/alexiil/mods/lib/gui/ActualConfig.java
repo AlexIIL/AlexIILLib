@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.config.GuiConfig;
@@ -19,8 +20,11 @@ public class ActualConfig extends GuiConfig {
     private static List<IConfigElement> getConfigElements(AlexIILMod mod) {
         List<IConfigElement> elements = new ArrayList<IConfigElement>();
         Configuration cfg = mod.cfg.cfg;
-        for (String name : cfg.getCategoryNames())
-            elements.add(new ConfigElement(cfg.getCategory(name)));
+        for (String name : cfg.getCategoryNames()) {
+            ConfigCategory cat = cfg.getCategory(name);
+            if (!cat.isChild())
+                elements.add(new ConfigElement(cfg.getCategory(name)));
+        }
         return elements;
     }
 }
