@@ -10,6 +10,7 @@ import java.util.Map;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.config.Property;
 import alexiil.mods.lib.AlexIILLib;
+import alexiil.mods.lib.ErrorHandling;
 
 public class RoamingIPAddress {
     private static Map<String, String> nameToIP = Collections.synchronizedMap(new HashMap<String, String>());
@@ -59,19 +60,35 @@ public class RoamingIPAddress {
             File ipFile = new File(roamingIPLoc.getString());
             if (ipFile.exists()) {
                 BufferedReader br = null;
+                String line = "";
                 try {
                     br = new BufferedReader(new FileReader(ipFile));
-                    String line = br.readLine();
+                    line = br.readLine();
+                    int lineNo = -1;
                     while (line != null) {
-                        String[] ip = line.split("=");
-                        AlexIILLib.instance.log.warn("Added (" + ip[0] + ") -> (" + ip[1] + ")");
-                        nameToIP.put(ip[0], ip[1]);
+                        lineNo++;
+                        if (line.length() == 0)
+                            AlexIILLib.instance.log.warn("Found an empty line at line #" + lineNo);
+                        else if (!line.contains("="))
+                            AlexIILLib.instance.log.warn("Did not find an equals sign at line #" + lineNo + ", \"" + line + "\"");
+                        else if (line.indexOf("=") == 0)
+                            AlexIILLib.instance.log.warn("Found an equals sign at the start of the line #" + lineNo + ", \"" + line + "\"");
+                        else if (line.indexOf("=") == line.length() - 1)
+                            AlexIILLib.instance.log.warn("Found an equals sign at the start of the line #" + lineNo + ", \"" + line + "\"");
+                        else if (line.indexOf("=") != line.lastIndexOf("="))
+                            AlexIILLib.instance.log.warn("Found more than one equals sign in the line #" + lineNo + ", \"" + line + "\"");
+                        else {
+                            String[] ip = line.split("=");
+                            AlexIILLib.instance.log.info("Added (" + ip[0] + ") -> (" + ip[1] + ")");
+                            nameToIP.put(ip[0], ip[1]);
+                        }
                         line = br.readLine();
                     }
                 }
                 catch (Throwable t) {
-                    AlexIILLib.instance.log.warn("loading IP addresses failed (" + t.getMessage() + ")");
-                    AlexIILLib.instance.log.warn(t);
+                    ErrorHandling.printStackTrace(t, "loading the line " + line);
+                    // AlexIILLib.instance.log.warn("loading IP addresses failed (" + t.getMessage() + ")");
+                    // AlexIILLib.instance.log.warn(t.getClass());
                 }
                 finally {
                     if (br != null)
@@ -82,8 +99,9 @@ public class RoamingIPAddress {
                 AlexIILLib.instance.log.warn("IP file did not exist!");
         }
         catch (Throwable t) {
-            AlexIILLib.instance.log.warn("Could not open IP address file (" + t.getMessage() + ")");
-            AlexIILLib.instance.log.warn(t);
+            // AlexIILLib.instance.log.warn("Could not open IP address file (" + t.getMessage() + ")");
+            ErrorHandling.printStackTrace(t, "opening the IP address file");
+            // AlexIILLib.instance.log.warn(t.getClass() + " @ " + t.getStackTrace()[0].getLineNumber());
         }
     }
 }

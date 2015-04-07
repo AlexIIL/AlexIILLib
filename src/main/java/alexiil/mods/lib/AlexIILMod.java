@@ -46,7 +46,8 @@ public abstract class AlexIILMod {
         netDistance.comment = "The range in which to send updates to players";
 
         connectExternally = cfg.getProp("connectExternally", true);
-        connectExternally.comment = "The ";
+        connectExternally.comment =
+                "If this is enabled, it will connect to an external server (drone.io) to fetch changelogs and release information";
     }
 
     public void initSiteVersioning() {

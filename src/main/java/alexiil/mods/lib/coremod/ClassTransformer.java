@@ -125,7 +125,7 @@ public class ClassTransformer implements IClassTransformer {
                             m.instructions.remove(method.getNext());
                             m.instructions.insert(method, new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(ChatTextTime.class),
                                     "getTimeText", "(" + Type.getDescriptor(IChatComponent.class) + "I)Ljava/lang/String;", false));
-                            m.instructions.insert(method, new VarInsnNode(Opcodes.ILOAD, obfs ? 12 : 11));
+                            m.instructions.insert(method, new VarInsnNode(Opcodes.ILOAD, 10));
                             // annoying forge hack-thing
                         }
                     }
