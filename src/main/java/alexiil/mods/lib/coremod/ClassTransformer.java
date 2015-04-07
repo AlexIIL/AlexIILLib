@@ -125,7 +125,7 @@ public class ClassTransformer implements IClassTransformer {
                             m.instructions.remove(method.getNext());
                             m.instructions.insert(method, new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(ChatTextTime.class),
                                     "getTimeText", "(" + Type.getDescriptor(IChatComponent.class) + "I)Ljava/lang/String;", false));
-                            m.instructions.insert(method, new VarInsnNode(Opcodes.ILOAD, 10));
+                            m.instructions.insert(method, new VarInsnNode(Opcodes.ILOAD, obfs ? 11 : 10));
                             // annoying forge hack-thing
                         }
                     }
@@ -133,14 +133,14 @@ public class ClassTransformer implements IClassTransformer {
             }
         }
 
-        // VANILLA
-        // 'net/minecraft/client/gui/GuiNewChat', integer, integer, integer, integer, integer, float, float, integer,
-        // integer, 'net/minecraft/client/gui/ChatLine', integer, double,
-        // double_2nd, integer, integer, integer
-        // THIS
-        // 'net/minecraft/client/gui/GuiNewChat', integer, integer, integer, integer, integer, float, float, integer,
-        // integer, integer, integer, 'net/minecraft/client/gui/ChatLine',
-        // double, double_2nd, integer, integer
+        // NORMAL
+        // locals: { 'net/minecraft/client/gui/GuiNewChat', integer, integer, integer, integer, integer, float, float,
+        // integer, integer, 'net/minecraft/client/gui/ChatLine', integer, double, double_2nd, integer, integer, integer
+        // }
+        // DEV
+        // locals: { 'net/minecraft/client/gui/GuiNewChat', integer, integer, integer, integer, integer, float, float,
+        // integer, integer, integer, integer, 'net/minecraft/client/gui/ChatLine', double, double_2nd, integer, integer
+        // }
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         classNode.accept(cw);
