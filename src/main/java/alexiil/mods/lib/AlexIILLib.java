@@ -42,9 +42,9 @@ public class AlexIILLib extends AlexIILMod {
 
         log.info("This is AlexIIL Lib, version " + meta.version);
 
-        betterPotions = cfg.getProp("betterPotions", "false");
-        timeText = cfg.getProp("textTime", "false");
-        roamingIP = cfg.getProp("roamingIP", "false");
+        betterPotions = cfg.getProp("betterPotions", false);
+        timeText = cfg.getProp("textTime", false);
+        roamingIP = cfg.getProp("roamingIP", false);
 
         cfg.saveAll();
 
