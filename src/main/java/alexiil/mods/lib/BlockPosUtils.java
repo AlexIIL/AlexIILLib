@@ -1,7 +1,10 @@
 package alexiil.mods.lib;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 
 public class BlockPosUtils {
@@ -32,5 +35,18 @@ public class BlockPosUtils {
         buffer.writeInt(pos.getX());
         buffer.writeInt(pos.getY());
         buffer.writeInt(pos.getZ());
+    }
+
+    public static AxisAlignedBB getBB(BlockPos pos, int range) {
+        return AxisAlignedBB.fromBounds(pos.getX() - range, pos.getY() - range, pos.getZ() - range, pos.getX() + range, pos.getY() + range,
+                pos.getZ() + range);
+    }
+
+    public static AxisAlignedBB getBB(Entity pos, int range) {
+        return AxisAlignedBB.fromBounds(pos.posX - range, pos.posY - range, pos.posZ - range, pos.posX + range, pos.posY + range, pos.posZ + range);
+    }
+
+    public static AxisAlignedBB getBB(TileEntity tile, int range) {
+        return getBB(tile.getPos(), range);
     }
 }

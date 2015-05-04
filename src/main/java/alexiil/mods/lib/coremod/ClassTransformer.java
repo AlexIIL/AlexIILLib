@@ -45,7 +45,9 @@ public class ClassTransformer implements IClassTransformer {
             log.warn("Transforming class " + transformedName + " FAILIED! Returning the old version of the class to avoid crashes.");
             t.printStackTrace();
         }
-        return basicClass;
+        if ("alexiil.mods.lib.AlexIILLibLog".equals(name))
+            return basicClass;
+        return LogHelperTransformer.transform(name, basicClass);
     }
 
     protected void showDiff(String className, byte[] input, byte[] output) {
@@ -85,8 +87,8 @@ public class ClassTransformer implements IClassTransformer {
 
                         node = node1;
                         node1 =
-                                new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(VanillaMethods.class), "getEnchantmentLevel",
-                                        "(Ljava/lang/String;" + Type.getDescriptor(PotionEffect.class) + ")Ljava/lang/String;", false);
+                            new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(VanillaMethods.class), "getEnchantmentLevel",
+                                "(Ljava/lang/String;" + Type.getDescriptor(PotionEffect.class) + ")Ljava/lang/String;", false);
                         m.instructions.insert(node, node1);
 
                         node = node1;
@@ -121,10 +123,10 @@ public class ClassTransformer implements IClassTransformer {
                     if (node instanceof MethodInsnNode) {
                         MethodInsnNode method = (MethodInsnNode) node;
                         if (method.owner.equals(Type.getInternalName(ChatLine.class))
-                                && (method.name.equals("getChatComponent") || method.name.equals("func_151461_a"))) {
+                            && (method.name.equals("getChatComponent") || method.name.equals("func_151461_a"))) {
                             m.instructions.remove(method.getNext());
                             m.instructions.insert(method, new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(ChatTextTime.class),
-                                    "getTimeText", "(" + Type.getDescriptor(IChatComponent.class) + "I)Ljava/lang/String;", false));
+                                "getTimeText", "(" + Type.getDescriptor(IChatComponent.class) + "I)Ljava/lang/String;", false));
                             m.instructions.insert(method, new VarInsnNode(Opcodes.ILOAD, obfs ? 11 : 10));
                             // annoying forge hack-thing
                         }
@@ -177,11 +179,9 @@ public class ClassTransformer implements IClassTransformer {
                     if (current.getOpcode() == Opcodes.ALOAD)
                         aloads++;
                     if (aloads == 5 && !done) {
-                        m.instructions.insert(
-                                current,
-                                new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(RoamingIPAddress.class),
-                                        "getModifiedRoamingServerData", "(" + Type.getDescriptor(ServerData.class) + ")"
-                                                + Type.getDescriptor(ServerData.class), false));
+                        m.instructions.insert(current, new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(RoamingIPAddress.class),
+                            "getModifiedRoamingServerData", "(" + Type.getDescriptor(ServerData.class) + ")" + Type.getDescriptor(ServerData.class),
+                            false));
                         i++;
                         done = true;
                     }
@@ -202,7 +202,7 @@ public class ClassTransformer implements IClassTransformer {
                         log.warn(getInsn(current));
                         m.instructions.remove(m.instructions.get(i));
                         m.instructions.insert(before, new MethodInsnNode(Opcodes.INVOKESPECIAL, Type.getInternalName(StringBuilder.class), "<init>",
-                                "(Ljava/lang/String;)V", false));
+                            "(Ljava/lang/String;)V", false));
                         dups = 5;
                     }
                     if (m.instructions.get(i).getOpcode() == Opcodes.PUTFIELD)
@@ -211,8 +211,8 @@ public class ClassTransformer implements IClassTransformer {
                     // INVOKESTATIC alexiil/mods/basicutils/coremod/RoamingIPAddress.getModifiedRoamingServerData
                     // (Lnet/minecraft/client/multiplayer/ServerData;)Lnet/minecraft/client/multiplayer/ServerData;
                 }
-                m.instructions.insert(lastPutField,
-                        new FieldInsnNode(Opcodes.PUTFIELD, className, "roamingServer", Type.getDescriptor(ServerData.class)));
+                m.instructions.insert(lastPutField, new FieldInsnNode(Opcodes.PUTFIELD, className, "roamingServer", Type
+                    .getDescriptor(ServerData.class)));
                 m.instructions.insert(lastPutField, new VarInsnNode(Opcodes.ALOAD, 2));
                 m.instructions.insert(lastPutField, new VarInsnNode(Opcodes.ALOAD, 0));
             }
@@ -224,8 +224,8 @@ public class ClassTransformer implements IClassTransformer {
                         getFields++;
                         if (getFields == 13)// Must be the one to replace with "roamingServer"
                         {
-                            m.instructions.insert(node,
-                                    new FieldInsnNode(Opcodes.GETFIELD, className, "roamingServer", Type.getDescriptor(ServerData.class)));
+                            m.instructions.insert(node, new FieldInsnNode(Opcodes.GETFIELD, className, "roamingServer", Type
+                                .getDescriptor(ServerData.class)));
                             m.instructions.remove(node);
                         }
                     }
@@ -235,8 +235,8 @@ public class ClassTransformer implements IClassTransformer {
                 for (int i = 0; i < m.instructions.size(); i++) {
                     AbstractInsnNode node = m.instructions.get(i);
                     if (m.instructions.get(i).getOpcode() == Opcodes.GETFIELD) {
-                        m.instructions.insert(node,
-                                new FieldInsnNode(Opcodes.GETFIELD, className, "roamingServer", Type.getDescriptor(ServerData.class)));
+                        m.instructions.insert(node, new FieldInsnNode(Opcodes.GETFIELD, className, "roamingServer", Type
+                            .getDescriptor(ServerData.class)));
                         m.instructions.remove(node);
                     }
                 }
@@ -270,8 +270,7 @@ public class ClassTransformer implements IClassTransformer {
                 // INVOKESTATIC alexiil/mods/basicutils/coremod/RoamingIPAddress.getModifiedRoamingServerData
                 // (Lnet/minecraft/client/multiplayer/ServerData;)Lnet/minecraft/client/multiplayer/ServerData;
                 m.instructions.insert(lastALOAD, new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(RoamingIPAddress.class),
-                        "getModifiedRoamingServerData", "(" + Type.getDescriptor(ServerData.class) + ")" + Type.getDescriptor(ServerData.class),
-                        false));
+                    "getModifiedRoamingServerData", "(" + Type.getDescriptor(ServerData.class) + ")" + Type.getDescriptor(ServerData.class), false));
             }
         }
 

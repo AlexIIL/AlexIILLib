@@ -1,15 +1,13 @@
 package alexiil.mods.lib.gui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import alexiil.mods.lib.git.Commit;
 import alexiil.mods.lib.git.Release;
-import net.minecraft.client.Minecraft;
 
 public class CommitScrollingList extends TextGuiScrollingList {
-    public final List<Commit> commitList = new ArrayList<Commit>();
     public final BaseConfig parent;
 
     public CommitScrollingList(BaseConfig parent, int width, int height, int top, int bottom, int left) {
