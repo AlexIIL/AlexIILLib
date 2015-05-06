@@ -157,25 +157,25 @@ public class AlexIILLibLog {
             case Opcodes.IF_ICMPLE:// Less Than or Equal
             case Opcodes.IFLE: {
                 text = arg1 + " <= " + arg2;
-                returnVal = ((Double) arg1) <= ((Double) arg2);
+                returnVal = ((Integer) arg1) <= ((Integer) arg2);
                 break;
             }
             case Opcodes.IF_ICMPLT:// Less Than
             case Opcodes.IFLT: {
                 text = arg1 + " < " + arg2;
-                returnVal = ((Double) arg1) < ((Double) arg2);
+                returnVal = ((Integer) arg1) < ((Integer) arg2);
                 break;
             }
             case Opcodes.IF_ICMPGE:// Greater Than or Equal
             case Opcodes.IFGE: {
                 text = arg1 + " >= " + arg2;
-                returnVal = ((Double) arg1) >= ((Double) arg2);
+                returnVal = ((Integer) arg1) >= ((Integer) arg2);
                 break;
             }
             case Opcodes.IF_ICMPGT:// Greater Than
             case Opcodes.IFGT: {
                 text = arg1 + " > " + arg2;
-                returnVal = ((Double) arg1) > ((Double) arg2);
+                returnVal = ((Integer) arg1) > ((Integer) arg2);
                 break;
             }
             default: {
