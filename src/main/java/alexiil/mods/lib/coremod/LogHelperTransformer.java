@@ -190,15 +190,22 @@ public class LogHelperTransformer implements Opcodes {
     private static void insertInvoke(MethodNode node) {
         Type[] args = Type.getArgumentTypes(node.desc);
         int length = (Type.getArgumentsAndReturnSizes(node.desc) >> 2) - 1;
+        if (((node.access / ACC_STATIC) & 1) == 0 && !("<init>".equals(node.name))) {
+            Type[] args2 = new Type[args.length + 1];
+            args2[0] = Type.getObjectType(Type.getInternalName(Object.class));
+            System.arraycopy(args, 0, args2, 1, args.length);
+            args = args2;
+            length++;
+        }
         InsnList list = new InsnList();
-        list.add(new LdcInsnNode(length));
+        list.add(new LdcInsnNode(args.length));
         list.add(new TypeInsnNode(ANEWARRAY, Type.getInternalName(Object.class)));
         // Use 'j' to track the array index (double_2nd counts as 2 long in the locals stack, but only one in our 'args'
         // array, so we must negate it separately from 'i'
         int arrayIndex = args.length - 1;
-        for (int localsIndex = length - 1; localsIndex >= 0;) {
+        for (int localsIndex = length - 1; localsIndex >= 0 && arrayIndex >= 0;) {
             list.add(new InsnNode(DUP));// push Array reference (duplicate the array thats on there)
-            list.add(new LdcInsnNode(localsIndex));// push Index
+            list.add(new LdcInsnNode(arrayIndex));// push Index
             localsIndex -= insertCastToObject(list, localsIndex, args[arrayIndex]);// push Value
             list.add(new InsnNode(AASTORE));// pop 3
             arrayIndex--;

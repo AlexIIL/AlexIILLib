@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 import alexiil.mods.lib.coremod.ChatTextTime;
 import alexiil.mods.lib.coremod.RoamingIPAddress;
 import alexiil.mods.lib.coremod.VanillaMethods;
@@ -39,7 +40,6 @@ public class AlexIILLib extends AlexIILMod {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-
         log.info("This is AlexIIL Lib, version " + meta.version);
 
         betterPotions = cfg.getProp("betterPotions", false);

@@ -47,7 +47,7 @@ public abstract class AlexIILMod {
 
         connectExternally = cfg.getProp("connectExternally", true);
         connectExternally.comment =
-                "If this is enabled, it will connect to an external server (drone.io) to fetch changelogs and release information";
+            "If this is enabled, it will connect to an external server (drone.io) to fetch changelogs and release information";
     }
 
     public void initSiteVersioning() {
