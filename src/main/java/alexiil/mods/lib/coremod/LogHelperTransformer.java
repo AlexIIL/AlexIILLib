@@ -191,8 +191,9 @@ public class LogHelperTransformer implements Opcodes {
         Type[] args = Type.getArgumentTypes(node.desc);
         int length = (Type.getArgumentsAndReturnSizes(node.desc) >> 2) - 1;
         int lowestLocal = 0;
-        if (((node.access / ACC_STATIC) & 1) == 1 || "<init>".equals(node.name)) {
+        if (((node.access / ACC_STATIC) & 1) == 0) {
             lowestLocal = 1;
+            length++;
         }
         InsnList list = new InsnList();
         list.add(new LdcInsnNode(args.length));
