@@ -11,6 +11,14 @@ import org.objectweb.asm.Opcodes;
 public class AlexIILLibLog {
     private static Logger log;
 
+    public static void trace(String message) {
+        log(Level.TRACE, message);
+    }
+
+    public static void debug(String message) {
+        log(Level.DEBUG, message);
+    }
+
     public static void info(String toLog) {
         log(Level.INFO, toLog);
     }
@@ -21,10 +29,6 @@ public class AlexIILLibLog {
 
     public static void warn(String message, Throwable thrown) {
         log(Level.WARN, message, thrown);
-    }
-
-    public static void trace(String message) {
-        log(Level.TRACE, message);
     }
 
     public static void log(Level level, String text) {

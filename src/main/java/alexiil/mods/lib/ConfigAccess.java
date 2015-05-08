@@ -1,6 +1,7 @@
 package alexiil.mods.lib;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import net.minecraftforge.common.config.Configuration;
@@ -20,14 +21,25 @@ public class ConfigAccess {
     private AlexIILMod mod;
 
     public static ConfigAccess get(File file, AlexIILMod mod) {
-        if (configs.containsKey(file.getAbsolutePath())) {
-            ConfigAccess ca = configs.get(file);
+        String canonical;
+        try {
+            canonical = file.getCanonicalPath();
+        }
+        catch (IOException e) {
+            AlexIILLibLog.warn("Failed to get the canonical path from " + file.getAbsolutePath(), e);
+            canonical = file.getAbsolutePath();
+        }
+
+        if (configs.containsKey(canonical)) {
+            ConfigAccess ca = configs.get(canonical);
             if (ca.mod == null)
                 ca.mod = mod;
+            AlexIILLibLog.info("Loaded the existing config for " + canonical);
             return ca;
         }
         ConfigAccess ca = new ConfigAccess(file, mod);
-        configs.put(file.getAbsolutePath(), ca);
+        configs.put(canonical, ca);
+        AlexIILLibLog.info("Created a new config for " + canonical);
         return ca;
     }
 
