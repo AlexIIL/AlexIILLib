@@ -1,6 +1,7 @@
 package alexiil.mods.lib.tile;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+
 import alexiil.mods.lib.AlexIILMod;
 import alexiil.mods.lib.net.INetworkTile;
 import alexiil.mods.lib.net.MessageUpdate;

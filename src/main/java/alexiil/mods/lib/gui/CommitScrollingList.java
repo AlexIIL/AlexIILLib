@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+
 import alexiil.mods.lib.git.Commit;
 import alexiil.mods.lib.git.Release;
 

@@ -39,15 +39,17 @@ public abstract class AlexIILMod {
         meta = event.getModMetadata();
         cfg = new ConfigAccess(event.getSuggestedConfigurationFile(), this);
 
+        connectExternally = cfg.getProp("connectExternally", true);
+        connectExternally.comment =
+            "If this is enabled, it will connect to an external server (drone.io) to fetch changelogs and release information";
+    }
+
+    protected void useTiles() {
         netRate = cfg.getProp("netRate", 120);
         netRate.comment = "How long to wait between sending updates, in ticks";
 
         netDistance = cfg.getProp("netDistance", 120);
         netDistance.comment = "The range in which to send updates to players";
-
-        connectExternally = cfg.getProp("connectExternally", true);
-        connectExternally.comment =
-            "If this is enabled, it will connect to an external server (drone.io) to fetch changelogs and release information";
     }
 
     public void initSiteVersioning() {

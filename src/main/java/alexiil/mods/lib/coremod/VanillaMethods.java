@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.potion.PotionEffect;
+
 import alexiil.mods.lib.AlexIILLib;
 
 public class VanillaMethods {

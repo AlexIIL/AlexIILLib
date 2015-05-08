@@ -138,7 +138,7 @@ public class SearchBox {
 
     public boolean isInside(BlockPos pos) {
         return pos.getX() >= min.getX() && pos.getX() <= max.getX() && pos.getY() >= min.getY() && pos.getY() <= max.getY()
-                && pos.getZ() >= min.getZ() && pos.getZ() <= max.getZ();
+            && pos.getZ() >= min.getZ() && pos.getZ() <= max.getZ();
     }
 
     public boolean isOnVertex(BlockPos pos) {

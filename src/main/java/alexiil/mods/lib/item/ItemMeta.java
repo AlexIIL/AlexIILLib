@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+
 import alexiil.mods.lib.block.BlockMeta;
 
 public final class ItemMeta {

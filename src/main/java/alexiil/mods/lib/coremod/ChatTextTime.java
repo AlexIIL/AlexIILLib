@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.config.Property;
+
 import alexiil.mods.lib.AlexIILLib;
 
 public class ChatTextTime {

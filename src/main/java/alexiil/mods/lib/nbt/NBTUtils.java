@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.config.Property.Type;
+
 import alexiil.mods.lib.AlexIILLib;
 
 public class NBTUtils {
@@ -214,8 +215,8 @@ public class NBTUtils {
                         }
                         case 9:
                         case 10: {
-                            AlexIILLib.instance.log
-                                    .warn("A tag list was found embedded in a tag list! this cannot be directly transfered to a config category, skipping");
+                            AlexIILLib.instance.log.warn("A tag list was found embedded in a tag list! "
+                                + "This cannot be directly transfered to a config category, skipping.");
                         }
 
                         default:

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.config.Property;
+
 import alexiil.mods.lib.AlexIILLib;
 import alexiil.mods.lib.ErrorHandling;
 

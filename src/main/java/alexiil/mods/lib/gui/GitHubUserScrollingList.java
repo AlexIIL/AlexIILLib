@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+
 import alexiil.mods.lib.git.GitHubUser;
 
 public class GitHubUserScrollingList extends TextGuiScrollingList {

@@ -9,6 +9,7 @@ import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
+
 import alexiil.mods.lib.AlexIILMod;
 import alexiil.mods.lib.LangUtils;
 

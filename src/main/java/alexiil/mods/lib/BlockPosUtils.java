@@ -38,8 +38,8 @@ public class BlockPosUtils {
     }
 
     public static AxisAlignedBB getBB(BlockPos pos, int range) {
-        return AxisAlignedBB.fromBounds(pos.getX() - range, pos.getY() - range, pos.getZ() - range, pos.getX() + range, pos.getY() + range,
-                pos.getZ() + range);
+        double xMin = pos.getX() - range;
+        return AxisAlignedBB.fromBounds(xMin, pos.getY() - range, pos.getZ() - range, pos.getX() + range, pos.getY() + range, pos.getZ() + range);
     }
 
     public static AxisAlignedBB getBB(Entity pos, int range) {
