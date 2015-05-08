@@ -37,7 +37,7 @@ public class ItemBase extends Item {
         this.mod = mod;
         this.name = name;
         setUnlocalizedName(mod.meta.modId + "_" + name);
-        Property prop = mod.cfg.cfg.get("items", name, true);
+        Property prop = mod.cfg.cfg().get("items", name, true);
         prop.comment = "Enable the " + mod.format(getUnlocalizedName() + ".name") + " item";
         if (prop.getBoolean()) {
             GameRegistry.registerItem(this, name);

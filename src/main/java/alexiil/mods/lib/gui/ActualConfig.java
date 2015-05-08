@@ -20,7 +20,7 @@ public class ActualConfig extends GuiConfig {
 
     private static List<IConfigElement> getConfigElements(AlexIILMod mod) {
         List<IConfigElement> elements = new ArrayList<IConfigElement>();
-        Configuration cfg = mod.cfg.cfg;
+        Configuration cfg = mod.cfg.cfg();
         for (String name : cfg.getCategoryNames()) {
             ConfigCategory cat = cfg.getCategory(name);
             if (!cat.isChild())

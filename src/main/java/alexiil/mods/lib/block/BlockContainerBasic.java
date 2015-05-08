@@ -42,7 +42,7 @@ public abstract class BlockContainerBasic extends BlockContainer {
         this.mod = mod;
         setUnlocalizedName(mod.meta.modId + "_" + name);
 
-        Property prop = mod.cfg.cfg.get("blocks", name, "true");
+        Property prop = mod.cfg.cfg().get("blocks", name, "true");
         prop.comment = "Enable the " + mod.format(getUnlocalizedName() + ".name") + " block";
         enabled = prop.getBoolean();
         if (enabled) {

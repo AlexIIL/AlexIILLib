@@ -37,7 +37,7 @@ public abstract class AlexIILMod {
     public void preInit(FMLPreInitializationEvent event) {
         log = event.getModLog();
         meta = event.getModMetadata();
-        cfg = new ConfigAccess(event.getSuggestedConfigurationFile(), this);
+        cfg = ConfigAccess.get(event.getSuggestedConfigurationFile(), this);
 
         connectExternally = cfg.getProp("connectExternally", true);
         connectExternally.comment =
