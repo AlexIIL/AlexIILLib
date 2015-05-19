@@ -98,7 +98,7 @@ public class ClassTransformer implements IClassTransformer {
             }
         }
 
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(cw);
 
         showDiff("InventoryEffectRenderer", input, cw.toByteArray());
@@ -144,7 +144,7 @@ public class ClassTransformer implements IClassTransformer {
         // integer, integer, integer, integer, 'net/minecraft/client/gui/ChatLine', double, double_2nd, integer, integer
         // }
 
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(cw);
         log.info("Transformed class GuiNewChat");
 
@@ -243,7 +243,7 @@ public class ClassTransformer implements IClassTransformer {
             }
         }
 
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         // showMethod(classNodeorig, "drawEntry");
         // showMethod(classNode, "drawEntry");
         // showMethodDiff(classNodeorig, classNode, "drawEntry");
@@ -274,7 +274,7 @@ public class ClassTransformer implements IClassTransformer {
             }
         }
 
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(cw);
         byte[] out = cw.toByteArray();
         showDiff("net.minecraft.client.gui.GuiMultiplayer", input, out);

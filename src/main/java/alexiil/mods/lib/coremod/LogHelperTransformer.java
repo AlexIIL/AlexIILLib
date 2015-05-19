@@ -134,7 +134,7 @@ public class LogHelperTransformer implements Opcodes {
                 }
             }
 
-            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
             classNode.accept(cw);
             byte[] bytes = cw.toByteArray();
 
