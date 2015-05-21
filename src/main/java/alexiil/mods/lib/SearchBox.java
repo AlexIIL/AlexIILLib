@@ -1,6 +1,7 @@
 package alexiil.mods.lib;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
@@ -8,12 +9,12 @@ import net.minecraft.util.EnumFacing;
 
 /** Currently unused, this class allowed for searching a give volume, incrementing the position at any time. This also
  * allows for adding coordinates to search at any time. */
-public class SearchBox {
+public class SearchBox implements Iterable<BlockPos> {
     public BlockPos min, max, cur;
     /** This determines whether to increment or decrement the value. */
     public boolean posX, posY, posZ;
     public ArrayDeque<BlockPos> toSearch;
-    public boolean doOnce, isDone = false;
+    public boolean doOnce = true, isDone = false;
     public long progress = 0;
     public long size;
 
@@ -177,5 +178,24 @@ public class SearchBox {
 
     public void pushNext(BlockPos pos) {
         toSearch.push(pos);
+    }
+
+    @Override
+    public Iterator<BlockPos> iterator() {
+        SearchBox box = new SearchBox(this);
+        box.doOnce = true;
+        return box.new SearchBoxIterator();
+    }
+
+    public class SearchBoxIterator implements Iterator<BlockPos> {
+        @Override
+        public boolean hasNext() {
+            return SearchBox.this.isDone();
+        }
+
+        @Override
+        public BlockPos next() {
+            return SearchBox.this.next();
+        }
     }
 }
