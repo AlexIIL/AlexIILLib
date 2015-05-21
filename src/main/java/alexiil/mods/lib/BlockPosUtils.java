@@ -6,6 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 
 public class BlockPosUtils {
     public static BlockPos readFromNBT(NBTTagCompound nbt, String tagPart) {
@@ -48,5 +50,12 @@ public class BlockPosUtils {
 
     public static AxisAlignedBB getBB(TileEntity tile, int range) {
         return getBB(tile.getPos(), range);
+    }
+
+    public static BlockPos move(BlockPos pos, EnumFacing direction) {
+        int x = direction.getAxis() == Axis.X ? direction.getAxisDirection().getOffset() : 0;
+        int y = direction.getAxis() == Axis.Y ? direction.getAxisDirection().getOffset() : 0;
+        int z = direction.getAxis() == Axis.Z ? direction.getAxisDirection().getOffset() : 0;
+        return pos.add(x, y, z);
     }
 }
