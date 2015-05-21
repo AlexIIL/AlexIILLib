@@ -9,7 +9,7 @@ import net.minecraft.world.chunk.Chunk;
 import com.google.common.collect.Lists;
 
 public class SearchUtils {
-    public static Iterable<BlockPos> searchChunk(Chunk chunk) {
+    public static SearchBox searchChunk(Chunk chunk) {
         BlockPos min = new BlockPos(chunk.xPosition << 2, 0, chunk.zPosition << 2);
         BlockPos max = min.add(15, 255, 15);
         return new SearchBox(min, max);

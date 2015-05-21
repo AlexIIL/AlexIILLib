@@ -15,6 +15,8 @@ public class SearchBox implements Iterable<BlockPos> {
     public boolean posX, posY, posZ;
     public ArrayDeque<BlockPos> toSearch;
     public boolean doOnce = true, isDone = false;
+    /** Used by the iterator to force the search box to only do it once */
+    private boolean forceOnce = false;
     public long progress = 0;
     public long size;
 
@@ -120,7 +122,7 @@ public class SearchBox implements Iterable<BlockPos> {
             return;
         }
 
-        if (doOnce && cur.getY() == min.getY()) {
+        if ((doOnce || forceOnce) && cur.getY() == min.getY()) {
             isDone = true;
             return;
         }
@@ -181,9 +183,9 @@ public class SearchBox implements Iterable<BlockPos> {
     }
 
     @Override
-    public Iterator<BlockPos> iterator() {
+    public SearchBoxIterator iterator() {
         SearchBox box = new SearchBox(this);
-        box.doOnce = true;
+        box.forceOnce = true;
         return box.new SearchBoxIterator();
     }
 
@@ -201,6 +203,10 @@ public class SearchBox implements Iterable<BlockPos> {
         @Override
         public void remove() {
             throw new UnsupportedOperationException("remove");
+        }
+
+        public void add(BlockPos pos) {
+            SearchBox.this.pushNext(pos);
         }
     }
 }
