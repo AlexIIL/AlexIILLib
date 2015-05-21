@@ -197,5 +197,10 @@ public class SearchBox implements Iterable<BlockPos> {
         public BlockPos next() {
             return SearchBox.this.next();
         }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
     }
 }
