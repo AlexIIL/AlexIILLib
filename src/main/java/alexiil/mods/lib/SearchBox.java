@@ -208,5 +208,9 @@ public class SearchBox implements Iterable<BlockPos> {
         public void add(BlockPos pos) {
             SearchBox.this.pushNext(pos);
         }
+
+        public BlockPos peek() {
+            return SearchBox.this.current();
+        }
     }
 }
