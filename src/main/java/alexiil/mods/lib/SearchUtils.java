@@ -72,6 +72,11 @@ public class SearchUtils {
                 }
                 return pos;
             }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
         }
     }
 }
