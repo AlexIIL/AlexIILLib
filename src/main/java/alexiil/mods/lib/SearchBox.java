@@ -192,7 +192,7 @@ public class SearchBox implements Iterable<BlockPos> {
     public class SearchBoxIterator implements Iterator<BlockPos> {
         @Override
         public boolean hasNext() {
-            return SearchBox.this.isDone();
+            return !SearchBox.this.isDone();
         }
 
         @Override

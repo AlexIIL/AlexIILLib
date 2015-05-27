@@ -10,14 +10,17 @@ import net.minecraft.world.chunk.Chunk;
 import com.google.common.collect.Lists;
 
 import alexiil.mods.lib.SearchBox.SearchBoxIterator;
+import alexiil.version.api.VersionedApi;
 
 public class SearchUtils {
+    @VersionedApi.Final
     public static SearchBox searchChunk(Chunk chunk) {
         BlockPos min = new BlockPos(chunk.xPosition << 2, 0, chunk.zPosition << 2);
         BlockPos max = min.add(15, 255, 15);
         return new SearchBox(min, max);
     }
 
+    @VersionedApi.Final
     public static Iterable<BlockPos> searchFaces(BlockPos pos) {
         List<BlockPos> positions = Lists.newArrayList();
         for (EnumFacing dir : EnumFacing.VALUES) {
@@ -26,6 +29,7 @@ public class SearchUtils {
         return positions;
     }
 
+    @VersionedApi.Final
     public static Iterable<BlockPos> searchAround(BlockPos pos, int radius) {
         BlockPos min = pos.add(-radius, -radius, -radius);
         BlockPos max = pos.add(radius, radius, radius);
