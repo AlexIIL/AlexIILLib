@@ -15,7 +15,7 @@ import alexiil.version.api.VersionedApi;
 public class SearchUtils {
     @VersionedApi.Final
     public static SearchBox searchChunk(Chunk chunk) {
-        BlockPos min = new BlockPos(chunk.xPosition << 2, 0, chunk.zPosition << 2);
+        BlockPos min = new BlockPos(chunk.xPosition << 4, 0, chunk.zPosition << 4);
         BlockPos max = min.add(15, 255, 15);
         return new SearchBox(min, max);
     }
