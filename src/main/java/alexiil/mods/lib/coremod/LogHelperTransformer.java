@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 
 import alexiil.mods.lib.AlexIILLibLog;
 import alexiil.mods.lib.debug.DebugLog;
@@ -26,6 +26,7 @@ import alexiil.mods.lib.debug.LoggingPositions;
 public class LogHelperTransformer implements Opcodes {
     private static final Multimap<String, LoggingPositions> annotationTypeMap = ArrayListMultimap.create();
     private static final List<String> whitelist = Lists.newArrayList();
+    private static final List<String> forceDebug = Lists.newArrayList();
     private static final Map<Integer, Integer> ifBytecodes = Maps.newHashMap();
     private static final Map<Integer, Boolean> ifByteType = Maps.newHashMap();
 
@@ -41,6 +42,8 @@ public class LogHelperTransformer implements Opcodes {
         annotationTypeMap.put(Type.getDescriptor(DebugLog.IgnoreClass.class), LoggingPositions.IGNORE_PARENT);
 
         addToWhitelist("alexiil");
+        addToWhitelist("com.alexiil");
+        forceDebug("net.minecraft.crash");
 
         addType(IF_ACMPEQ, 2, true);
         addType(IF_ACMPNE, 2, true);
@@ -64,6 +67,11 @@ public class LogHelperTransformer implements Opcodes {
 
     public static void addToWhitelist(String packageBase) {
         whitelist.add(packageBase);
+    }
+
+    public static void forceDebug(String clsBase) {
+        addToWhitelist(clsBase);
+        forceDebug.add(clsBase);
     }
 
     public static void addType(int opcode, int stackSize, boolean isObject) {
@@ -93,14 +101,14 @@ public class LogHelperTransformer implements Opcodes {
             ClassReader reader = new ClassReader(data);
             reader.accept(classNode, 0);
 
-            List<LoggingPositions> shouldDebug = shouldDebug(classNode.visibleAnnotations);
+            List<LoggingPositions> shouldDebug = shouldDebug(classNode.visibleAnnotations, name);
 
             boolean hasChanged = false;
 
             for (MethodNode node : classNode.methods) {
                 String blsLogName = Type.getInternalName(AlexIILLibLog.class);
 
-                List<LoggingPositions> actual = shouldDebug(node.visibleAnnotations);
+                List<LoggingPositions> actual = shouldDebug(node.visibleAnnotations, name);
                 actual = combine(shouldDebug, actual);
 
                 if (actual.contains(LoggingPositions.INVOKE)) {
@@ -163,7 +171,12 @@ public class LogHelperTransformer implements Opcodes {
         }
     }
 
-    private static List<LoggingPositions> shouldDebug(List<AnnotationNode> annotations) {
+    private static List<LoggingPositions> shouldDebug(List<AnnotationNode> annotations, String clsName) {
+        for (String base : forceDebug) {
+            if (clsName.startsWith(base)) {
+                return Lists.newArrayList(LoggingPositions.INVOKE, LoggingPositions.LOGIC_SPLIT, LoggingPositions.RETURN);
+            }
+        }
         List<LoggingPositions> list = Lists.newArrayList();
         if (annotations != null)
             for (AnnotationNode annotation : annotations) {

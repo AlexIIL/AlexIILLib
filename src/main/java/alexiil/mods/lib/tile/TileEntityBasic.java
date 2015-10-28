@@ -1,5 +1,7 @@
 package alexiil.mods.lib.tile;
 
+import com.google.common.base.Throwables;
+
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 
@@ -7,10 +9,18 @@ import net.minecraft.tileentity.TileEntity;
 public abstract class TileEntityBasic extends TileEntity implements IUpdatePlayerListBox {
     @Override
     public final void update() {
-        if (worldObj.isRemote)
-            onClientTick();
-        else
-            onTick();
+        try {
+            if (worldObj.isRemote) {
+                onClientTick();
+            }
+            else {
+                onTick();
+            }
+        }
+        catch (Throwable t) {
+            t.printStackTrace();
+            throw Throwables.propagate(t);
+        }
     }
 
     public abstract void onTick();
